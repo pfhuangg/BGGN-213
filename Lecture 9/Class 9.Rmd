@@ -2,7 +2,9 @@
 title: "Class 9"
 author: "Peng Fei Huang"
 date: "5/2/2018"
-output: md_document
+output: 
+  html_document: 
+    keep_md: yes
 ---
 
 ```{r setup, include=FALSE}
