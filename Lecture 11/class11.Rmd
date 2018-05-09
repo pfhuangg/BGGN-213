@@ -28,10 +28,127 @@ percent
 ```
 
 
+## Using Bio3D
+
+Load the bio3d package
+
+
+```{r}
+library(bio3d)
+```
+
+Read in our HIV-Pr structure 
+
+```{r}
+pdb <- read.pdb("1hsg")
+pdb
+```
+
+```{r}
+attributes(pdb)
+```
+
+```{r}
+head(pdb$atom)
+```
+
+# Print a subset of $atom data for the first two atoms
+```{r}
+pdb$atom[1:2, c("eleno", "elety", "x","y","z")]
+```
+
+# Note that individual $atom records can also be accessed like this
+```{r}
+pdb$atom$elety[1:2]
+```
+
+# Which allows us to do the following
+```{r}
+#plot.bio3d(pdb$atom$b[pdb$calpha], sse=pdb, typ="l", ylab=“B-factor”)
+```
+
+# Print a summary of the coordinate data in $xyz
+```{r}
+pdb$xyz
+```
+
+# Examine the row and column dimensions
+```{r}
+dim(pdb$xyz)
+```
+
+# Print coordinates for the first two atom
+```{r}
+pdb$xyz[ 1, atom2xyz(1:2) ]
+```
+
+# Select all C-alpha atoms (return their indices)
+```{r}
+ca.inds <- atom.select(pdb, "calpha")
+ca.inds
+```
+
+
+# Print details of the first few selected atoms
+```{r}
+head( pdb$atom[ca.inds$atom, ] )
+```
+
+
+# And selected xyz coordinates
+```{r}
+head( pdb$xyz[, ca.inds$xyz] )
+```
+
+
+# Select chain A
+```{r}
+a.inds <- atom.select(pdb, chain="A")
+```
+
+# Select C-alphas of chain A
+```{r}
+ca.inds <- atom.select(pdb, "calpha", chain="A")
+```
+
+# We can combine multiple selection criteria to return their intersection
+```{r}
+cab.inds <- atom.select(pdb, elety=c("CA","CB"), chain="A", resno=10:20)
+```
 
 
 
 
+#Q8. Use the Bio3D write.pdb() function to write out a protein only PDB file for viewing in VMD. Also write out a second separate PDB file for the ligand with residue name MK1
+
+```{r}
+inds.ligand <- atom.select(pdb, "ligand")
+inds.protein <- atom.select(pdb, "protein")
+inds.protein
+```
+
+
+Check we have what we want
+```{r}
+pdb$atom[inds.ligand$atom,]
+```
+
+```{r}
+head(pdb$atom[inds.protein$atom,])
+
+```
+
+```{r}
+pdb.ligand <- trim.pdb(pdb, inds=inds.ligand)
+pdb.ligand
+pdb.protein <-  trim.pdb(pdb,inds=inds.protein)
+```
+
+
+```{r}
+write.pdb(pdb.ligand, file="1hsg_ligand.pdb")
+write.pdb(pdb.protein, file="1hsg_protein.pdb")
+```
 
 
 
