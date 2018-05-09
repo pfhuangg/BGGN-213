@@ -151,6 +151,95 @@ write.pdb(pdb.protein, file="1hsg_protein.pdb")
 ```
 
 
+## Download some example PDB files
+## Aligning mutliple strucutres
+```{r}
+ids <- c("1TND_B","1AGR_A","1TAG_A","1GG2_A","1KJY_A","4G5Q_A")
+files <- get.pdb(ids, split = TRUE)
+```
+
+# Extract and align the chains we are interested in
+```{r}
+pdbs <- pdbaln(files, fit = TRUE)
+pdbs
+```
+
+
+##Section 5: Example Application on Adenylate Kinase (Adk)
+
+```{r}
+aa <- get.seq("1ake_A")
+```
+
+# Blast or hmmer search 
+```{r}
+b <- blast.pdb(aa)
+```
+
+# Plot a summary of search results
+```{r}
+hits <- plot(b)
+hits
+```
+
+```{r}
+head(hits$pdb.id)
+```
+
+# Fetch PDBs
+```{r}
+files <- get.pdb(hits$pdb.id, path = "pdbs", split = TRUE, gzip = TRUE)
+```
+
+# Align structures
+```{r}
+pdbs <- pdbaln(files)
+```
+
+# Vector containing PDB codes
+```{r}
+ids <- basename.pdb(pdbs$id)
+```
+
+# Draw schematic alignment
+```{r}
+plot(pdbs, labels=ids)
+```
+
+
+##Principle Component Analysis
+```{r}
+# find invariant core
+core <- core.find(pdbs)
+
+```
+
+
+```{r}
+# superimpose all structures to core
+pdbs$xyz = pdbfit(pdbs, core)
+```
+
+
+```{r}
+# Perform PCA
+pc.xray <- pca(pdbs)
+plot(pc.xray)
+```
+
+
+# Visualize first principal component
+```{r}
+pc1 <- mktrj(pc.xray, pc=1, file="pc_1.pdb")
+```
+
+
+
+
+
+
+
+
 
 
 
