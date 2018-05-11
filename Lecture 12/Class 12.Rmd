@@ -46,17 +46,50 @@ write.pdb(protein, "1hsg_protein.pdb")
 ```
 
 
+## Process docking result fro viewing in VMD
+
+```{r}
+library(bio3d)
+res <- read.pdb("all.pdbqt", multi=TRUE)
+write.pdb(res, "results.pdb")
+```
+
+#Compare our results to Merk Co. drug crystal structure 
+```{r}
+ori <- read.pdb("1hsg_ligand.pdbqt")
+```
 
 
+```{r}
+rmsd(ori, res)
+```
+
+#Q6 RMSD based on nonhydrogen atoms 
+```{r}
+atom.select(ori, "noh")
+rmsd(ori$xyz[,inds$xyz], res$xyz[, inds$xyz])
+```
 
 
+## Revisit Search and retrieve Adenylate kinase Structure 
 
 
+```{r}
+aa <- get.seq("P69441")
+```
+
+```{r}
+b <- blast.pdb(aa)
+```
 
 
+```{r}
+hits <- plot(b)
+```
 
-
-
+```{r}
+head(hits$pdb.id)
+```
 
 
 
