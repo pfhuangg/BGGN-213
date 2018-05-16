@@ -1,0 +1,17 @@
+---
+title: "Class 13 Bioinformatics"
+author: "Peng Fei Huang"
+date: "5/16/2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## 1000 Genome Project data 
+Read 1000 genome data for MXL dataset 
+```{r}
+
+```
+
