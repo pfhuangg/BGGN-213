@@ -1,0 +1,49 @@
+---
+title: "Class 16"
+author: "Peng Fei Huang"
+date: "5/25/2018"
+output: 
+  html_document: 
+    keep_md: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+## R Markdown
+
+This is an R markdown document created in TEXAS 
+
+```{r}
+shmlast_out <- read.csv("mouse.1.rna.fna.gz.x.cow.faa.crbl.csv")
+```
+
+```{r}
+head(shmlast_out)
+```
+
+```{r}
+dim(shmlast_out)
+```
+
+```{r}
+hist(shmlast_out$E_scaled)
+```
+
+```{r}
+hist(shmlast_out$bitscore) 
+```
+
+```{r}
+hist(shmlast_out$q_len)
+```
+
+```{r}
+plot(shmlast_out$q_len, shmlast_out$bitscore)
+```
+
+
+
+
